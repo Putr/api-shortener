@@ -1,6 +1,7 @@
 {
     "require": {
         "silex/silex": "~1.3",
-        "predis/predis": "~1.0"
+        "predis/predis": "~1.0",
+        "monolog/monolog": "^1.19"
     }
 }
