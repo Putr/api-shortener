@@ -1,8 +1,8 @@
 server {
     listen 80;
-    server_name pir.at.lan;
+    server_name api-shortener.lan;
 
-    root /var/www/projects/pirates-projects/pir.at/web;
+    root /var/www/projects/api-shortener.lan/web;
 
     include /etc/nginx/mime.types; 
 
@@ -35,7 +35,7 @@ server {
         return 404;
     }
 
-    error_log /var/www/projects/pirates-projects/pir.at/log/nginx_error.log;
-    access_log /var/www/projects/pirates-projects/pir.at/log/nginx_access.log;
+    error_log /var/www/projects/api-shortener.lan/log/nginx_error.log;
+    access_log /var/www/projects/api-shortener.lan/log/nginx_access.log;
 
 }
