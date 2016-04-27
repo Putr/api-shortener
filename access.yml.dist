@@ -1,4 +1,0 @@
-access_codes:
-	# This should list access codes in format label: sha1 encoded password
-	# Example:
-	# ppsi: c965e2bcc0f4a9af38e353317585cf72af0b3c7b

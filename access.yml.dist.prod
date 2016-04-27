@@ -1,0 +1,2 @@
+access_codes:
+	# This should list access codes in format label: sha1 encoded password

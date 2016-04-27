@@ -14,7 +14,7 @@ $app->get('/{slug}', function (Silex\Application $app, Request $request, $slug) 
     }
 
     // Logs number of clicks
-    $redis->incr(sprintf('num_%s_%s', $slug, date('dmY')));
+    $redis->incr(sprintf('num_%s_%s', $slug, date('Ymd')));
     $redis->incr(sprintf('num_%s_all', $slug));
 
     $logLine = sprintf("%s::%s::%s::%s" . PHP_EOL, date('c'), $slug, $url, $_SERVER['REMOTE_ADDR']);
