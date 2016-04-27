@@ -1,4 +1,5 @@
 <?php
+use Symfony\Component\HttpFoundation\Request;
 
 $app->get('/error/{slug}', function (Silex\Application $app, Request $request, $slug) {
     return "This short URL does not exsist";

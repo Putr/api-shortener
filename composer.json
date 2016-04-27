@@ -2,6 +2,7 @@
     "require": {
         "silex/silex": "~1.3",
         "predis/predis": "~1.0",
-        "monolog/monolog": "^1.19"
+        "monolog/monolog": "^1.19",
+        "symfony/yaml": "^3.0"
     }
 }

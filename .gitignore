@@ -1,3 +1,4 @@
 vendor/
 etc/nginx.conf
 access.yml
+dump.rdb
