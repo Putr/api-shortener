@@ -2,12 +2,11 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-// @todo THIS IS UNTESTED
 $app->post('/api/v1/url', function (Silex\Application $app, Request $request) use ($redis, $config) {
 	$ac = $request->get('access_code');
 	$slug = $request->get('slug');
 	$url = $request->get('target_url');
-	
+
 	if (empty($ac)) {
 		return new Response('Missing access code', 400);
 	}
@@ -18,6 +17,10 @@ $app->post('/api/v1/url', function (Silex\Application $app, Request $request) us
 
 	if (empty($url)) {
 		return new Response('Missing target url', 400);
+	}
+
+	if ($redis->get('url_'.$slug) !== NULL) {
+		return new Response('Slug already exsists.', 409);
 	}
 
 	$acHash = sha1($ac);
