@@ -3,6 +3,8 @@ Simple URL shortener API
 
 This is a simple shortener with **no GUI**, just an API. Currently only supports one short domain per install. This will be added soon.
 
+[API documentation](doc/api.md)
+
 # Dependencies
 
 - Redis
