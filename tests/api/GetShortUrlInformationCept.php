@@ -5,15 +5,21 @@ $I->wantTo('Get information about a short url via API');
 $I->amGoingTo('first crate a new short URL');
 $I->haveHttpHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-$slug  = 'cc_test_' . rand(0,9999999);
-$url   = 'http://example.com/cc_test';
-$label = "tester";
-$I->sendPOST('url', ['shortUrl' => $slug, 'target_url' => $url, 'access_code' => 'ui8ujhinijuhiizuhjuko4iuouhsuirehfo7sahuhyfa78z3rsy']);
+$short = 'cc_test_' . rand(0,9999999);
+$domain = 'api-shortener.lan';
+$ac = 'ui8ujhinijuhiizuhjuko4iuouhsuirehfo7sahuhyfa78z3rsy';
+$target_url = 'http://example.com/cc_test';
+
+$I->sendPOST('/url/' . $domain, [
+	'shortUrl'    => $short, 
+	'target_url'  => $target_url, 
+	'access_code' => $ac
+]);
 $I->seeResponseCodeIs(200);
 
 $I->amGoingTo('check information about the url');
 
-$I->sendGET('url/' . $slug);
+$I->sendGET(sprintf('/url/%s/%s', $domain, $short));
 $I->seeResponseCodeIs(200);
 $I->seeResponseIsJson();
 $I->seeResponseMatchesJsonType([

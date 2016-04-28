@@ -1,0 +1,12 @@
+log_hits: true
+debug: true
+access_codes:
+  testing: 
+    secret: c965e2bcc0f4a9af38e353317585cf72af0b3c7b # ui8ujhinijuhiizuhjuko4iuouhsuirehfo7sahuhyfa78z3rsy
+    enabled_domains: ['pir.at', 'api-shortener.lan']
+domains:
+  pir.at: ~
+  tldr.si:
+    extra_params: 'neki={short-domain}&nekidruzga={short-path}'
+  api-shortener.lan:
+    extra_params: 'neki={short-domain}&nekidruzga={short-path}'
