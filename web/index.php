@@ -3,7 +3,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Yaml\Parser;
 
-$app = new Silex\Application();
+$app = new \Silex\Application();
 
 $app['domain'] = $_SERVER['HTTP_HOST'];
 
@@ -40,9 +40,14 @@ if (!array_key_exists($app['domain'], $app['config']['domains'])) {
 // 
 // Include res of the code
 // 
-require('engine.php');
-require('api.php');
-require('errors.php');
+$app->get('/{shortUrl}', 'Controller\\Engine::useShortUrl');
+
+$app->post('/api/v1/url/{domain}', 'Controller\\Api::createNewShortUrl');
+$app->get('/api/v1/url/{domain}/{shortUrl}', 'Controller\\Api::showShortUrl');
+$app->delete('/api/v1/url/{domain}/{shortUrl}', 'Controller\\Api::deleteShortUrl');
+
+$app->get('/error/{shortUrl}', 'Controller\\Error::missingShortUrl');
+$app->get('/error/invalid-domain', 'Controller\\Error::domainNotEnabled');
 
 
 $app->run();
