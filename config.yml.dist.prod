@@ -1,2 +1,10 @@
+log_hits: true
+debug: false
 access_codes:
-	# This should list access codes in format label: sha1 encoded password
+  # This should list access codes in format label: sha1 encoded password
+
+domains:
+  # This should contain domains, for example:
+  # example.com: ~
+  # example-full.com:
+  #		extra-params: 'utm=test&utn=test2'

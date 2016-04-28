@@ -1,41 +1,49 @@
 Simple URL shortener API
 ------------------------
 
-This is a simple shortener with **no GUI**, just an API. Currently only supports one short domain per install. This will be added soon.
+This is a simple shortener with **no GUI**, just an API & one YAML config file.
 
 [API documentation](doc/api.md)
+
+**Features**
+- Multiple domains per install
+- Per domain create/delete access controll
+- Append GET paramateres to resolved URLs (configured per domain)
+- Can short url hits to log file
+- Counts number of hits, grouped by days
 
 ## Dependencies
 
 - Redis
+- Nginx
 - PHP 5.5+
 - Composer
 
 ## Install dependencies
 
-### Install and configure redis
+**Redis**
 
 If using in production, make sure to secure the install correctly!
 
 [Download an install from official page](http://redis.io/download)
 
-### Install composer
+**Composer**
 
 [Official page](https://getcomposer.org/download/)
 
 
 ## Deploy
 
-### Run composer
+**Run Composer**
 
     composer install
 
-### Setup permissions
+**Setup permissions**
 
     sudo chown [USER]:www-data log/ -R
     sudo chmod 775 log -R
 
-### Configure nginx
+**Configure nginx**
 
 Copy the distribution file to create a local version
 
@@ -45,17 +53,17 @@ Configure it to your needs (specifically 'server_name' and path to php socket)
 
 Restart nginx after you are done.
 
-### Configure access
+**Configure**
 
-If deploying a development install copy the dev version
+If deploying a development install copy the dev version:
 
-    cp access.yml.dist.dev access.yml
+    cp config.yml.dist.dev config.yml
 
 For production use:
 
-    cp access.yml.dist.prod access.yml
+    cp config.yml.dist.prod config.yml
 
-Add your own access codes.
+Add your own access codes and domains.
 
 **IMPORTANT**: Access codes in the file must be sha1 hashed!
 
