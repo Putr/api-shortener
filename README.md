@@ -9,7 +9,7 @@ This is a simple shortener with **no GUI**, just an API & one YAML config file.
 - Multiple domains per install
 - Per domain create/delete access controll
 - Append GET paramateres to resolved URLs (configured per domain)
-- Can short url hits to log file
+- Can short log url hits to log file
 - Counts number of hits, grouped by days
 
 ## Dependencies
@@ -75,7 +75,7 @@ That's it!
 
 ## Development
 
-For testing [Codeception](http://codeception.com/quickstart) is used.
+For testing I'm using [Codeception](http://codeception.com/quickstart).
 
 After installing run tests with:
 

@@ -1,7 +1,7 @@
 API Documentation
 -----------------
 
-Api can be used on any of the configured domains.
+Api can be used on any of the configured domains. It does not matter which you use, so I suggest you stick to one, and use it. 
 
 ## Create short url
 
@@ -12,7 +12,7 @@ Paramaters:
 - shortUrl
 - target_url
 
-**Note**: Short URLs configured are *per domain*, that's why you have to specify the domain you wish to use in the URL path. 
+**Note**: Short URLs are configured *per domain*, that's why you have to specify the domain you wish to use in the URL path. 
 
 ## Get information about short url
 
@@ -26,7 +26,7 @@ Returned fields:
 
 ## Delete short url
 
-Can only be done by the owner!
+Can only be done by the creator of the short url!
 
 DELETE /api/v1/url/[domain]/[shortUrl]
 
