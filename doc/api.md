@@ -32,3 +32,9 @@ DELETE /api/v1/url/[domain]/[shortUrl]
 
 Paramater:
 - access_code
+
+## Get enabled domains
+
+Returns list of all domains enabled for provided access code
+
+GET /api/v1/domain

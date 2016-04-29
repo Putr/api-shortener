@@ -45,6 +45,7 @@ $app->get('/{shortUrl}', 'Controller\\Engine::useShortUrl');
 $app->post('/api/v1/url/{domain}', 'Controller\\Api::createNewShortUrl');
 $app->get('/api/v1/url/{domain}/{shortUrl}', 'Controller\\Api::showShortUrl');
 $app->delete('/api/v1/url/{domain}/{shortUrl}', 'Controller\\Api::deleteShortUrl');
+$app->get('/api/v1/domain', 'Controller\\Api::getAllEnabledDomains');
 
 $app->get('/error/{shortUrl}', 'Controller\\Error::missingShortUrl');
 $app->get('/error/invalid-domain', 'Controller\\Error::domainNotEnabled');
