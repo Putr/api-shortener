@@ -5,11 +5,13 @@ This is a simple shortener with **no GUI**, just an API & one YAML config file.
 
 [API documentation](doc/api.md)
 
+If you really need a GUI, [there is one](https://github.com/Putr/api-shortener-gui) but only for testing/stopgap/personal purposes.
+
 **Features**
 - Multiple domains per install
 - Per domain create/delete access controll
 - Append GET paramateres to resolved URLs (configured per domain)
-- Can short log url hits to log file
+- Can log short url hits to log file
 - Counts number of hits, grouped by days
 
 ## Dependencies
