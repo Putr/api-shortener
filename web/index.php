@@ -1,6 +1,13 @@
 <?php
 require_once __DIR__.'/../vendor/autoload.php';
 
+// I HATE CORS
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+	header('Access-Control-Allow-Methods: POST, PUT, DELETE, GET, HEAD');
+	header('Access-Control-Allow-Headers: X-Requested-With');
+  	exit;
+}
+
 use Symfony\Component\Yaml\Parser;
 
 $app = new \Silex\Application();
@@ -49,6 +56,5 @@ $app->get('/api/v1/domain', 'Controller\\Api::getAllEnabledDomains');
 
 $app->get('/error/{shortUrl}', 'Controller\\Error::missingShortUrl');
 $app->get('/error/invalid-domain', 'Controller\\Error::domainNotEnabled');
-
 
 $app->run();
