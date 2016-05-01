@@ -34,7 +34,7 @@ class Api extends Base {
 			return $app->json(['error' => 'Domain not enabled.'], 400);
 		}
 
-		if ($app['redis']->get(sprintf('%s_url_%s', $domain, $shortUrl)) !== NULL) {
+		if ($app['model']->getUrl($domain, $shortUrl) !== NULL) {
 			return $app->json(['error' => 'Short Url already exsists.'], 400);
 		}
 
@@ -80,12 +80,12 @@ class Api extends Base {
 	    //
 	    // Save to DB
 	    //
-		$app['redis']->set(sprintf('%s_url_%s', $domain, $shortUrl), $url);
-		$app['redis']->set(sprintf('%s_meta_%s', $domain, $shortUrl), json_encode(
-				['creator'   => $AcInfo['label'],
+		$app['model']->setUrl($domain, $shortUrl, $url);
+		$meta = ['creator'   => $AcInfo['label'],
 				 'timestamp' => time()
-				])
-		);
+				];
+		$app['model']->setMeta($domain, $shortUrl, $meta);
+
 		return $app->json(['success' => true], 200);
 	}
 
@@ -98,45 +98,22 @@ class Api extends Base {
 	 * @return Response
 	 */
 	public function showShortUrl(\Silex\Application $app, Request $request, $domain, $shortUrl) {
-		$meta = $this->getMeta($domain, $shortUrl, $app);
+		$meta = $app['model']->getMeta($domain, $shortUrl);
 
 		if (!$meta) {
 			return $app->json(['error' => 'Short URL not found.'], 404);
 		}
 
-		$url  = $app['redis']->get(sprintf('%s_url_%s', $domain, $shortUrl));
-
-		$numAll = (integer) $app['redis']->get(sprintf('%s_num_%s_all', $domain, $shortUrl));
-		$numToday = (integer) $app['redis']->get(sprintf('%s_num_%s_%s', $domain, $shortUrl, date('Ymd')));
-
-		$today = (integer) date('Ymd');
-		$numWeek = $numMonth = $numToday;
-
-		for ($i=1; $i < 31; $i++) { 
-			$thisDay = $app['redis']->get(sprintf('%s_num_%s_%s', $domain, $shortUrl, $today - $i));
-
-			if ($thisDay === NULL) {
-				$thisDay = 0;
-			}
-			if ($i < 8) {
-				$numWeek += $thisDay;
-			}
-			$numMonth += $thisDay;
-
-			if ($numMonth === $numAll) {
-				break;
-			}
-		}
+		$url  = $app['model']->getUrl($domain, $shortUrl);
+		$stats = $app['model']->getStats($domain, $shortUrl);
 
 		$payload = [
-			'creator'     => $meta['creator'],
-			'timestamp'   => $meta['timestamp'],
-			'target_url'  => $url,
-			'hits_today'  => $numToday,
-			'hits_7days'  => $numWeek,
-			'hits_30days' => $numMonth,
-			'hits_all'    => $numAll
+			'creator'    => $meta['creator'],
+			'timestamp'  => $meta['timestamp'],
+			'target_url' => $url,
 		];
+
+		$payload = array_merge($payload, $stats);
 
 		return $app->json($payload, 200);
 	}
@@ -156,7 +133,7 @@ class Api extends Base {
 			return $app->json(['error' => 'Missing access code'], 400);
 		}
 
-		$meta = $this->getMeta($domain, $shortUrl, $app);
+		$meta = $app['model']->getMeta($domain, $shortUrl, $app);
 
 		if (!$AcInfo = $this->isAccessCodeValid($app, $ac)) {
 			return $app->json(['error' => 'Access code is invalid.'], 403);
@@ -166,17 +143,7 @@ class Api extends Base {
 			return $app->json(['error' => 'Can not delete a short URL you are not the creator of.']);
 		}
 
-		$app['redis']->del([
-			sprintf('%s_meta_%s', $domain, $shortUrl),
-			sprintf('%s_url_%s', $domain, $shortUrl),
-			sprintf('%s_num_%s_all', $domain, $shortUrl)
-		]);
-
-		$keys = $app['redis']->keys(sprintf('%s_num_%s_*', $domain, $shortUrl));
-
-		if (count($keys) > 0) {
-			$app['redis']->del($keys);
-		}
+		$app['model']->removeRecord($domain, $shortUrl);
 		
 		return $app->json(['success' => true], 200);
 		
@@ -205,8 +172,12 @@ class Api extends Base {
 		}
 
 		return $app->json(['error' => 'Access code is invalid.'], 403);
+	}
 
+	public function getDomainUrls(\Silex\Application $app, $domain) {
+		$payload = $app['model']->getAllRecordsForDomain($domain);
 
+		return $app->json($payload);
 	}
 
 }

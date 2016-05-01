@@ -18,6 +18,10 @@ $app['redis'] = $app->share(function() {
 	return new Predis\Client();
 });
 
+$app['model'] = $app->share(function($app) {
+	return new Model\Redis($app['redis']);
+});
+
 //
 // Load configuration
 // 
@@ -50,6 +54,7 @@ if (!array_key_exists($app['domain'], $app['config']['domains'])) {
 $app->get('/{shortUrl}', 'Controller\\Engine::useShortUrl');
 
 $app->post('/api/v1/url/{domain}', 'Controller\\Api::createNewShortUrl');
+$app->get('/api/v1/url/{domain}', 'Controller\\Api::getDomainUrls');
 $app->get('/api/v1/url/{domain}/{shortUrl}', 'Controller\\Api::showShortUrl');
 $app->delete('/api/v1/url/{domain}/{shortUrl}', 'Controller\\Api::deleteShortUrl');
 $app->get('/api/v1/domain', 'Controller\\Api::getAllEnabledDomains');
