@@ -90,8 +90,9 @@ class Redis {
 			$domain = $matches[1][0];
 			$shortUrl = $matches[2][0];
 			$data = [
-				'shortUrl' => $shortUrl,
-				'stats' => $this->getStats($domain, $shortUrl),
+				'shortUrl'  => $shortUrl,
+				'stats'     => $this->getStats($domain, $shortUrl),
+				'targetUrl' => $this->getUrl($domain, $shortUrl)
 			];
 
 			$meta = $this->getMeta($domain, $shortUrl);
