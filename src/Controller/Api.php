@@ -45,7 +45,7 @@ class Api extends Base {
 			return $app->json(['error' => 'Access code is invalid.'], 403);
 		}
 
-		if (!array_search($domain, $AcInfo['enabled_domains'])) {
+		if (array_search($domain, $AcInfo['enabled_domains']) === false) {
 			return $app->json(['error' => 'Not authorized for this domain.'], 403);
 		}
 
