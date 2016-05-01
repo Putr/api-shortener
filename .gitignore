@@ -3,3 +3,4 @@ etc/nginx.conf
 access.yml
 dump.rdb
 tests/_output/*
+deploy.php

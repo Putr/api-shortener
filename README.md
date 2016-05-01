@@ -1,7 +1,7 @@
 Simple URL shortener API
 ------------------------
 
-This is a simple shortener with **no GUI**, just an API & one YAML config file.
+This is a simple, self-hosted url shortener with **no GUI**, just an API & one YAML config file.
 
 [API documentation](doc/api.md)
 
@@ -82,3 +82,16 @@ For testing I'm using [Codeception](http://codeception.com/quickstart).
 After installing run tests with:
 
     codecept run --steps
+
+## Deployment
+
+Deployment is done with [Deployer](http://deployer.org/).
+
+**Copy config file and configure**
+
+    cp deploy.php.dist deploy.php
+    nano deploy.php
+
+run with
+
+    deb deploy production
