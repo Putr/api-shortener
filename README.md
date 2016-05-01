@@ -94,4 +94,4 @@ Deployment is done with [Deployer](http://deployer.org/).
 
 run with
 
-    deb deploy production
+    dep deploy production
