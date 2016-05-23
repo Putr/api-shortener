@@ -18,7 +18,7 @@ class Engine {
 
 	    if ($app['config']['log_hits']) {
 	        $logLine = sprintf("%s::%s::%s::%s::%s" . PHP_EOL, date('c'), $app['domain'], $shortUrl, $url, $_SERVER['REMOTE_ADDR']);
-	        file_put_contents(__DIR__ . '/../log/hits.log', $logLine, FILE_APPEND);
+	        file_put_contents(__DIR__ . '/../../log/hits.log', $logLine, FILE_APPEND);
 	    }
 
 	    return $app->redirect($url);
