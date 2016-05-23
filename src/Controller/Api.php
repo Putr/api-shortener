@@ -156,22 +156,19 @@ class Api extends Base {
 	 */
 	public function getAllEnabledDomains(\Silex\Application $app, Request $request) {
 		$ac = $request->get('access_code');
-		$acHash = sha1($ac);
 
-		foreach ($app['config']['access_codes'] as $label => $params) {
-			if ($params['secret'] === $acHash) {
-				if (isset($params['enabled_domains'])) {
-					return $app->json($params['enabled_domains']);
-				} else {
-					foreach ($app['config']['domains'] as $domain => $params) {
-						$payload[] = $domain;
-					}
-					return $app->json($payload);
-				}
-			}
+		if (!$AcInfo = $this->isAccessCodeValid($app, $ac)) {
+			return $app->json(['error' => 'Access code is invalid.'], 403);
 		}
-
-		return $app->json(['error' => 'Access code is invalid.'], 403);
+		
+		if (isset($AcInfo['enabled_domains'])) {
+			return $app->json($AcInfo['enabled_domains']);
+		} else {
+			foreach ($app['config']['domains'] as $domain => $params) {
+				$payload[] = $domain;
+			}
+			return $app->json($payload);
+		}
 	}
 
 	public function getDomainUrls(\Silex\Application $app, $domain) {
